@@ -1,10 +1,13 @@
 # See https://www.dartlang.org/guides/libraries/private-files
 
 # Files and directories created by pub
+.idea
 .dart_tool/
 .packages
 .pub/
 build/
+*.g.dart
+.metadata
 # If you're building an application, you may want to check-in your pubspec.lock
 pubspec.lock
 

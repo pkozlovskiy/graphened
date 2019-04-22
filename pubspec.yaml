@@ -1,0 +1,18 @@
+name: graphened
+version: 0.0.1
+
+description: >-
+  A Dart library for flutter app Developers; Graphene&#x2F;Bitshares blockchain.
+author: Pavel Kozlovskiy <pavel2033@gmail.com>
+homepage: http://github.com/dart-lang/graphened
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  json_annotation: ^2.2.0
+
+dev_dependencies:
+  test: ^1.3.4
+  build_runner: ^1.1.3
+  json_serializable: ^2.2.1
