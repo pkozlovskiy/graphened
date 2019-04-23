@@ -12,38 +12,20 @@ addons:
 # Defines the stages we want to run.
 jobs:
   include:
-    # First, check that everything analyzes properly and is formatted.
+    - stage: build
+      script:
+        - pub run build_runner build test
     - stage: analyze_and_format
       script:
         - dartanalyzer --fatal-warnings .
         - dartfmt -n --set-exit-if-changed .
-    # Next, build the entire `test` directory
-    - stage: build
-      script:
-        - pub run build_runner build test
-    # Set up several jobs in the next stage, using the built in sharding
-    # feature from the `test` package.
-    #
-    # Since a build already happened in the previous stage, these tasks will
-    # perform no-op builds which are fast (assuming you set up your cache
-    # properly above!).
     - stage: unit_test
       script:
         - pub run build_runner test -- --total-shards 4 --shard-index 0
-    - stage: unit_test
-      script:
-        - pub run build_runner test -- --total-shards 4 --shard-index 1
-    - stage: unit_test
-      script:
-        - pub run build_runner test -- --total-shards 4 --shard-index 2
-    - stage: unit_test
-      script:
-        - pub run build_runner test -- --total-shards 4 --shard-index 3
 
-# Specify the ordering of your stages
 stages:
-  - analyze_and_format
   - build
+  - analyze_and_format
   - unit_test
 
 cache:
