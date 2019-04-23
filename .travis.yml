@@ -1,26 +1,52 @@
 language: dart
 
+# Optional, the dart sdk release channel to use.
 dart:
-  - 2.2.0
   - dev
 
-dart_task:
-  - test: --platform vm
-  # No parallelism on Firefox (-j 1)
-  # Causes flakiness – need to investigate
-  - test: --platform firefox -j 1
-  - dartanalyzer: --fatal-infos --fatal-warnings .
+# Optional, required for web tests.
+sudo: required
+addons:
+  chrome: stable
 
-matrix:
+# Defines the stages we want to run.
+jobs:
   include:
-    # Only validate formatting using the dev release
-    - dart: dev
-      dart_task: dartfmt
+    # First, check that everything analyzes properly and is formatted.
+    - stage: analyze_and_format
+      script:
+        - datanalyzer --fatal-warnings .
+        - dartfmt -n --set-exit-if-changed .
+    # Next, build the entire `test` directory
+    - stage: build
+      script:
+        - pub run build_runner build test
+    # Set up several jobs in the next stage, using the built in sharding
+    # feature from the `test` package.
+    #
+    # Since a build already happened in the previous stage, these tasks will
+    # perform no-op builds which are fast (assuming you set up your cache
+    # properly above!).
+    - stage: unit_test
+      script:
+        - pub run build_runner test -- --total-shards 4 --shard-index 0
+    - stage: unit_test
+      script:
+        - pub run build_runner test -- --total-shards 4 --shard-index 1
+    - stage: unit_test
+      script:
+        - pub run build_runner test -- --total-shards 4 --shard-index 2
+    - stage: unit_test
+      script:
+        - pub run build_runner test -- --total-shards 4 --shard-index 3
 
-# Only building master means that we don't run two builds for each pull request.
-branches:
-  only: [master]
+# Specify the ordering of your stages
+stages:
+  - analyze_and_format
+  - build
+  - unit_test
 
 cache:
- directories:
-   - $HOME/.pub-cache
+  directories:
+    - $HOME/.pub-cache
+    - .dart_tool/build
