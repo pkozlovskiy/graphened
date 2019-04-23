@@ -1,32 +1,16 @@
 language: dart
 
-# Optional, the dart sdk release channel to use.
-dart:
-  - dev
-
-# Optional, required for web tests.
 sudo: required
 addons:
   chrome: stable
+branches:
+  only:
+    - master
 
-# Defines the stages we want to run.
-jobs:
-  include:
-    - stage: build
-      script:
-        - pub run build_runner build test
-    - stage: analyze_and_format
-      script:
-        - dartanalyzer --fatal-warnings .
-        - dartfmt -n --set-exit-if-changed .
-    - stage: unit_test
-      script:
-        - pub run build_runner test -- --total-shards 4 --shard-index 0
-
-stages:
-  - build
-  - analyze_and_format
-  - unit_test
+script:
+  - pub run build_runner build test
+  - dartanalyzer .
+  - dartfmt .
 
 cache:
   directories:
