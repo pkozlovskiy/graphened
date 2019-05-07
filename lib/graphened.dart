@@ -8,3 +8,4 @@ export 'src/graphene_object.dart';
 export 'src/public_key.dart';
 export 'src/user_account.dart';
 export 'src/votes.dart';
+export 'src/api/api.dart';
