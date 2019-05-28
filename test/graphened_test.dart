@@ -15,9 +15,9 @@ void main() {
       final userAccount = UserAccount(
         USER_ACCOUNT_ID,
         name: 'name',
-        owner: 'owner',
+        owner: Authority(0, Extensions()),
         active: Authority(0, Extensions()),
-        options: AccountOptions(PublicKey(), UserAccount('1.1.1'), 1, 1),
+        options: AccountOptions("", '1.1.1', 1, 1),
         membershipExpirationDate: MEMBERSHIP_EXPIRATION_DATE,
         registrar: 'registrar',
         referrer: 'referrer',

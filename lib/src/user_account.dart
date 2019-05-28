@@ -8,8 +8,9 @@ part 'user_account.g.dart';
 
 @JsonSerializable()
 class UserAccount extends GrapheneObject {
+  static final String PROXY_TO_SELF = "1.2.5";
   String name;
-  String owner;
+  Authority owner;
   Authority active;
   AccountOptions options;
   String statistics;

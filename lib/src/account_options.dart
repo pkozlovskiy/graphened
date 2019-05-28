@@ -8,12 +8,12 @@ part 'account_options.g.dart';
 
 @JsonSerializable()
 class AccountOptions {
-  final PublicKey memo_key;
-  final UserAccount voting_account;
+  final String memo_key;
+  final String voting_account;
   final int num_witness;
   final int num_comittee;
   List<Votes> votes;
-  Extensions extensions;
+  // Extensions extensions;
 
   AccountOptions(
     this.memo_key,
