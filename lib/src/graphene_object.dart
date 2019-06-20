@@ -6,23 +6,23 @@ class GrapheneObject {
 
   String id;
 
-  int space;
-  int type;
-  int instance;
+  int _space;
+  int _type;
+  int _instance;
 
   GrapheneObject(String id) {
     this.id = id;
-    List parts = id.split("\\.");
+    List parts = id.split('.');
     if (parts.length == 3) {
-      this.space = int.parse(parts[0]);
-      this.type = int.parse(parts[1]);
-      this.instance = int.parse(parts[2]);
+      _space = int.parse(parts[0]);
+      _type = int.parse(parts[1]);
+      _instance = int.parse(parts[2]);
     }
   }
 
   ///
   /// @return A String containing the full object apiId in the form {space}.{type}.{instance}
-  String get objectId => '$space.$type.$instance';
+  String get objectId => '$_space.$_type.$_instance';
 
   @override
   int get hashCode => objectId.hashCode;
@@ -42,9 +42,9 @@ class GrapheneObject {
   /// Returns the type of this object.
   /// @return Instance of the ObjectType enum.
   ObjectType getObjectType() {
-    switch (space) {
+    switch (_space) {
       case PROTOCOL_SPACE:
-        switch (type) {
+        switch (_type) {
           case 1:
             return ObjectType.BASE_OBJECT;
           case 2:
@@ -80,7 +80,7 @@ class GrapheneObject {
         }
         break;
       case IMPLEMENTATION_SPACE:
-        switch (type) {
+        switch (_type) {
           case 0:
             return ObjectType.GLOBAL_PROPERTY_OBJECT;
           case 1:

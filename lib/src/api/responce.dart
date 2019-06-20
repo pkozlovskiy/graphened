@@ -3,6 +3,7 @@ class Response<T> {
   int id;
   T result;
   Error error;
+  Type type;
 
   Response.fromJson(Map<String, dynamic> json)
       : id = json['id'],

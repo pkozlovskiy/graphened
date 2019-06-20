@@ -91,7 +91,7 @@ class GetAccountBalances extends Callable {
         id,
         RPC.CALL_GET_ACCOUNT_BALANCES,
         List<dynamic>.from([
-          userAccount.objectId,
+          userAccount.id,
           assetList.map((asset) => asset.objectId).toList()
         ]),
         ApiType.API_NONE);
